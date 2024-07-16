@@ -1,5 +1,5 @@
-// apps/reporting/webpack.config.js
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const path = require('path');
 const deps = require('../../package.json').dependencies;
 
 module.exports = {
@@ -11,22 +11,25 @@ module.exports = {
     runtimeChunk: false,
   },
   resolve: {
-    alias: {
-      ...deps,
-    },
+    extensions: ['.ts', '.js'],
+    modules: [
+      path.resolve(__dirname, '../../node_modules'), // Resolve node_modules at the project root level
+      'node_modules'
+    ],
   },
   plugins: [
     new ModuleFederationPlugin({
       name: 'reporting',
       filename: 'remoteEntry.js',
       exposes: {
-        './Module': './apps/reporting/src/app/reporting/reporting.module.ts',
+        './Module': path.resolve(__dirname, './src/app/reporting/reporting.module.ts'),
       },
       shared: {
         ...deps,
         '@angular/core': { singleton: true, strictVersion: true, requiredVersion: deps['@angular/core'] },
         '@angular/common': { singleton: true, strictVersion: true, requiredVersion: deps['@angular/common'] },
         '@angular/router': { singleton: true, strictVersion: true, requiredVersion: deps['@angular/router'] },
+        'zone.js': { singleton: true, strictVersion: true, requiredVersion: deps['zone.js'] },
       },
     }),
   ],

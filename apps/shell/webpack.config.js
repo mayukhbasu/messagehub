@@ -19,7 +19,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: 'shell',
       remotes: {
-        reporting: 'reporting@http://localhost:4201/remoteEntry.js',
+        reporting: 'reporting@http://localhost:4201/remoteEntry.js', // Update this with the correct URL for the reporting remote
       },
       shared: {
         ...deps,
