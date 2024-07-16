@@ -1,27 +1,29 @@
 {
-  "name": "shell",
+  "name": "reporting",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/shell/src",
+  "sourceRoot": "apps/reporting/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@nrwl/angular:webpack-browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "main": "apps/shell/src/main.ts",
+        "outputPath": "dist/apps/reporting",
+        "index": "apps/reporting/src/index.html",
+        "main": "apps/reporting/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/shell/tsconfig.app.json",
+        "tsConfig": "apps/reporting/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
-        "styles": ["apps/shell/src/styles.scss"],
+        "assets": ["apps/reporting/src/favicon.ico", "apps/reporting/src/assets"],
+        "styles": ["apps/reporting/src/styles.scss"],
         "scripts": [],
         "customWebpackConfig": {
-          "path": "apps/shell/webpack.config.js"
-        
+          "path": "apps/reporting/webpack.config.js",
+          "mergeStrategies": {
+            "module.rules": "replace"
+          }
         }
       },
       "configurations": {
@@ -54,14 +56,14 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "buildTarget": "shell:build"
+        "buildTarget": "reporting:build"
       },
       "configurations": {
         "production": {
-          "buildTarget": "shell:build:production"
+          "buildTarget": "reporting:build:production"
         },
         "development": {
-          "buildTarget": "shell:build:development"
+          "buildTarget": "reporting:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -69,7 +71,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "shell:build"
+        "buildTarget": "reporting:build"
       }
     },
     "lint": {
@@ -79,14 +81,14 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/shell/jest.config.ts"
+        "jestConfig": "apps/reporting/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "shell:build",
-        "port": 4200,
+        "buildTarget": "reporting:build",
+        "port": 4201,
         "spa": true
       }
     }
