@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountGridComponent } from './account-grid/account-grid.component';
 import { AgGridModule } from 'ag-grid-angular';
+import { ActionRenderComponent } from './action-render/action-render.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountGridComponent
+    AccountGridComponent,
+    ActionRenderComponent
   ],
   imports: [
     BrowserModule,

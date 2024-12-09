@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ColDef, GridOptions } from 'ag-grid-community';
-import { ActionRendererComponent } from './action-renderer.component';
+import { ActionRenderComponent } from '../action-render/action-render.component';
 
 export interface Account {
-  actions: string; // This will be handled as a button column now
+  actions: string;
   accountNumber: string;
   accountName: string;
   openedDate: string;
@@ -20,99 +20,89 @@ export interface Account {
   styleUrls: ['./account-grid.component.css']
 })
 export class AccountGridComponent {
+  // Define your rowData (your data for AG Grid)
+  rowData: Account[] = [
+    { 
+      actions: 'edit', 
+      accountNumber: '12345', 
+      accountName: 'Sample Account 1', 
+      openedDate: '2023-01-01', 
+      closedDate: '2024-01-01',
+      baseCurrencyCode: 'USD',
+      miaCode: 'MIA123',
+      fundCode: 'FUND001',
+      planId: 'PLAN001',
+    },
+    { 
+      actions: 'edit', 
+      accountNumber: '67890', 
+      accountName: 'Sample Account 2', 
+      openedDate: '2022-02-01', 
+      closedDate: '2023-12-01',
+      baseCurrencyCode: 'EUR',
+      miaCode: 'MIA456',
+      fundCode: 'FUND002',
+      planId: 'PLAN002',
+    },
+    // Add more accounts as needed
+  ];
+
+  // AG Grid options
   gridOptions: GridOptions = {
     pagination: true,
     rowSelection: 'multiple',
-    // Enable floating filter globally
     defaultColDef: {
       sortable: true,
       filter: true, // Allow filters globally
       floatingFilter: true, // Floating filter for all columns
     },
+    frameworkComponents: {
+      actionRenderer: ActionRenderComponent, // Register the custom component here
+    },
   };
 
+  // Column definitions, referencing the custom renderer for actions column
   columnDefs: ColDef[] = [
     {
       headerName: 'Actions',
       field: 'actions',
-      cellRenderer: 'actionRenderer', // Custom renderer for actions
+      cellRendererFramework: 'actionRenderer',
       filter: false, // No filter for actions column
       floatingFilter: false, // No floating filter for actions column
       width: 150, // Adjust width as needed
     },
-    {
-      headerName: 'Account Number',
-      field: 'accountNumber',
-      filter: 'agTextColumnFilter', // Enable text filter for this column
-      floatingFilter: true, // Enable floating filter
+    { 
+      headerName: 'Account Number', 
+      field: 'accountNumber', 
+      floatingFilter: true 
     },
-    {
-      headerName: 'Account Name',
-      field: 'accountName',
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
+    { 
+      headerName: 'Account Name', 
+      field: 'accountName' 
     },
-    {
-      headerName: 'Account Opened Date',
-      field: 'openedDate',
-      filter: 'agDateColumnFilter', // Enable date filter for date columns
-      floatingFilter: true,
+    { 
+      headerName: 'Opened Date', 
+      field: 'openedDate' 
     },
-    {
-      headerName: 'Account Closed Date',
-      field: 'closedDate',
-      filter: 'agDateColumnFilter',
-      floatingFilter: true,
+    { 
+      headerName: 'Closed Date', 
+      field: 'closedDate' 
     },
-    {
-      headerName: 'Base Currency Code',
-      field: 'baseCurrencyCode',
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
+    { 
+      headerName: 'Base Currency Code', 
+      field: 'baseCurrencyCode' 
     },
-    {
-      headerName: 'MIA Code',
-      field: 'miaCode',
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
+    { 
+      headerName: 'MIA Code', 
+      field: 'miaCode' 
     },
-    {
-      headerName: 'Fund Code',
-      field: 'fundCode',
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
+    { 
+      headerName: 'Fund Code', 
+      field: 'fundCode' 
     },
-    {
-      headerName: 'Plan ID',
-      field: 'planId',
-      filter: 'agTextColumnFilter',
-      floatingFilter: true,
-    },
-  ];
-
-  rowData: Account[] = [
-    {
-      actions: 'Edit',
-      accountNumber: '12345',
-      accountName: 'Account One',
-      openedDate: '2022-01-01',
-      closedDate: '2023-01-01',
-      baseCurrencyCode: 'USD',
-      miaCode: 'MIA123',
-      fundCode: 'FUND01',
-      planId: 'PLAN001',
-    },
-    {
-      actions: 'Edit',
-      accountNumber: '67890',
-      accountName: 'Account Two',
-      openedDate: '2023-02-01',
-      closedDate: '2023-12-01',
-      baseCurrencyCode: 'EUR',
-      miaCode: 'MIA456',
-      fundCode: 'FUND02',
-      planId: 'PLAN002',
-    },
-    // Add more rows as needed
+    { 
+      headerName: 'Plan ID', 
+      field: 'planId' 
+    }
   ];
 }
