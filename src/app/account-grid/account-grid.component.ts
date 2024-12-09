@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 import { ActionRendererComponent } from './action-renderer.component';
 
 export interface Account {
@@ -20,61 +20,99 @@ export interface Account {
   styleUrls: ['./account-grid.component.css']
 })
 export class AccountGridComponent {
+  gridOptions: GridOptions = {
+    pagination: true,
+    rowSelection: 'multiple',
+    // Enable floating filter globally
+    defaultColDef: {
+      sortable: true,
+      filter: true, // Allow filters globally
+      floatingFilter: true, // Floating filter for all columns
+    },
+  };
+
   columnDefs: ColDef[] = [
     {
       headerName: 'Actions',
       field: 'actions',
       cellRenderer: 'actionRenderer', // Custom renderer for actions
-      filter: false,
+      filter: false, // No filter for actions column
+      floatingFilter: false, // No floating filter for actions column
       width: 150, // Adjust width as needed
     },
-    { headerName: 'Account Number', field: 'accountNumber', floatingFilter: true },
-    { headerName: 'Account Number Name', field: 'accountName' },
-    { headerName: 'Account Opened Date', field: 'openedDate' },
-    { headerName: 'Account Closed Date', field: 'closedDate' },
-    { headerName: 'Account Base Currency Code', field: 'baseCurrencyCode' },
-    { headerName: 'MIA Code', field: 'miaCode' },
-    { headerName: 'Fund Code', field: 'fundCode' },
-    { headerName: 'Plan Id', field: 'planId' }
+    {
+      headerName: 'Account Number',
+      field: 'accountNumber',
+      filter: 'agTextColumnFilter', // Enable text filter for this column
+      floatingFilter: true, // Enable floating filter
+    },
+    {
+      headerName: 'Account Name',
+      field: 'accountName',
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Account Opened Date',
+      field: 'openedDate',
+      filter: 'agDateColumnFilter', // Enable date filter for date columns
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Account Closed Date',
+      field: 'closedDate',
+      filter: 'agDateColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Base Currency Code',
+      field: 'baseCurrencyCode',
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'MIA Code',
+      field: 'miaCode',
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Fund Code',
+      field: 'fundCode',
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
+    {
+      headerName: 'Plan ID',
+      field: 'planId',
+      filter: 'agTextColumnFilter',
+      floatingFilter: true,
+    },
   ];
 
-  // Define 100 records
-  rowData: Account[] = Array.from({ length: 100 }, (_, index) => ({
-    actions: '',
-    accountNumber: `ACCT-${index + 1}`,
-    accountName: `Account Name ${index + 1}`,
-    openedDate: `2020-01-01`,
-    closedDate: `2023-12-31`,
-    baseCurrencyCode: 'USD',
-    miaCode: `MIA-${index + 1}`,
-    fundCode: `FUND-${index + 1}`,
-    planId: `PLAN-${index + 1}`,
-  }));
-
-  frameworkComponents = {
-    actionRenderer: ActionRendererComponent 
-  };
-
-  // Action renderer for edit and delete icons
-  actionRenderer(params: any) {
-    return `
-      <button class="edit-btn" (click)="editRow(${params.node.rowIndex})">
-        <i class="fas fa-edit"></i>
-      </button>
-      <button class="delete-btn" (click)="deleteRow(${params.node.rowIndex})">
-        <i class="fas fa-trash"></i>
-      </button>
-    `;
-  }
-
-  // Edit and delete methods
-  editRow(rowIndex: number) {
-    alert('Edit Row: ' + rowIndex); // Replace with your edit logic
-  }
-
-  deleteRow(rowIndex: number) {
-    alert('Delete Row: ' + rowIndex); // Replace with your delete logic
-  }
-
-  
+  rowData: Account[] = [
+    {
+      actions: 'Edit',
+      accountNumber: '12345',
+      accountName: 'Account One',
+      openedDate: '2022-01-01',
+      closedDate: '2023-01-01',
+      baseCurrencyCode: 'USD',
+      miaCode: 'MIA123',
+      fundCode: 'FUND01',
+      planId: 'PLAN001',
+    },
+    {
+      actions: 'Edit',
+      accountNumber: '67890',
+      accountName: 'Account Two',
+      openedDate: '2023-02-01',
+      closedDate: '2023-12-01',
+      baseCurrencyCode: 'EUR',
+      miaCode: 'MIA456',
+      fundCode: 'FUND02',
+      planId: 'PLAN002',
+    },
+    // Add more rows as needed
+  ];
 }
