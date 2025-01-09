@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { CustomDateFormatterService } from '../services/custom-date-formatter.service';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  styleUrls: ['./modal.component.css'],
+  providers: [{ provide: NgbDateParserFormatter, useClass: CustomDateFormatterService }]
+
 })
 export class ModalComponent {
   formData = {
