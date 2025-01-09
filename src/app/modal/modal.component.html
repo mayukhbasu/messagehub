@@ -1,0 +1,40 @@
+<div class="modal-header">
+  <h4 class="modal-title">Form Modal</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <form>
+    <!-- Textbox 1 -->
+    <div class="mb-3">
+      <label for="textbox1" class="form-label">Textbox 1</label>
+      <input type="text" id="textbox1" class="form-control" [(ngModel)]="formData.textbox1" name="textbox1" placeholder="Enter first value" />
+    </div>
+
+    <!-- Textbox 2 -->
+    <div class="mb-3">
+      <label for="textbox2" class="form-label">Textbox 2</label>
+      <input type="text" id="textbox2" class="form-control" [(ngModel)]="formData.textbox2" name="textbox2" placeholder="Enter second value" />
+    </div>
+
+    <!-- Datepicker with Button -->
+    <div class="mb-3">
+      <label for="date" class="form-label">Select Date</label>
+      <div class="input-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="yyyy-mm-dd"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          [(ngModel)]="formData.date"
+          name="date"
+        />
+        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">📅</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" (click)="close()">Close</button>
+  <button class="btn btn-primary" (click)="submit()">Submit</button>
+</div>
